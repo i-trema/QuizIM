@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Quiz</string>
+    <string name="accueil_text">Bonjour ! Veuillez saisir votre nom</string>
+    <string name="nom_hint">Merci de saisir votre nom</string>
+    <string name="btn_commencer_text">Commencer le Quiz</string>
+    <string name="btn_supprimer_description">Effacer le nom</string>
+    <string name="btn_resp1_description">réponse 1</string>
+    <string name="btn_resp2_description">réponse 2</string>
+    <string name="btn_resp3_description">réponse 3</string>
+    <string name="btn_resp4_description">réponse 4</string>
+</resources>
