@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         private boolean btnsEnabled;
         protected static int score;
         protected static String nomUserActuel;
-
+        Toast m_currentToast = null;
         List<User> users = new ArrayList<>();
         SharedPreferences sharedPreferences;
 
@@ -54,20 +55,33 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //TODO
                 String nomSaisi = editTextName.getText().toString();
-                String messageScore = "Bonjour "+nomSaisi+" ! \n Votre dernier score est de "
-                        +sharedPreferences.getString(nomSaisi,"")+"/4";
-                Log.i("edittext",nomSaisi);
-                if (!btnsEnabled && !(nomSaisi.equals(""))) {
-                    enableBtns();
-                }else if (nomSaisi.equals("")) {
+
+                if (nomSaisi.length() > 12){
+                    afficherToast("12 caractères maximum !");
+                    editTextName.setText(nomSaisi.substring(0,nomSaisi.length()-1));
+                    editTextName.setSelection(nomSaisi.length()-1);
+
+                }
+                if (!nomSaisi.isEmpty() && nomSaisi.substring(nomSaisi.length() - 1).matches("[^A-Za-z0-9 _@.-]")) {
+                    afficherToast("caractère interdit : "+nomSaisi.substring(nomSaisi.length() - 1));
+                    editTextName.setText(nomSaisi.substring(0,nomSaisi.length()-1));
+                    editTextName.setSelection(nomSaisi.length()-1);
+
+                } else {
+                    String messageScore = "Bonjour " + nomSaisi + " ! \n Votre dernier score est de "
+                            + sharedPreferences.getString(nomSaisi, "") + "/4";
+                    if (!btnsEnabled && !(nomSaisi.equals(""))) {
+                        enableBtns();
+                    } else if (nomSaisi.equals("")) {
                         disableBtns();
                         textViewAccueil.setText(R.string.accueil_text);
                     }
-                if (sharedPreferences.getAll().containsKey(nomSaisi)){
-                    Log.i("ok","l'utilisateur existe dans la liste");
-                    textViewAccueil.setText(messageScore);
+                    if (sharedPreferences.getAll().containsKey(nomSaisi)) {
+                        Log.i("ok", "l'utilisateur existe dans la liste");
+                        textViewAccueil.setText(messageScore);
+                    }
                 }
-                }
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -83,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         imageViewSupprimer.setColorFilter(getColor(R.color.red_supprimer));
         btnsEnabled = true;
         Log.i("ok","boutons activés");
-
     }
 
     public void disableBtns() {
@@ -99,6 +112,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void commencerQuiz(View view){
         String nom = editTextName.getText().toString();
+
+        if (nom.length()<3){
+            afficherToast("le nom doit contenir au moins 3 caractères");
+            return;
+        }
         sharedPreferences = getSharedPreferences("users", MODE_PRIVATE);
 //        sharedPreferences.edit().clear().commit();
         nomUserActuel = nom;
@@ -106,19 +124,17 @@ public class MainActivity extends AppCompatActivity {
             if (!(sharedPreferences.contains(nomUserActuel))) {
 
                 SharedPreferences.Editor edit = sharedPreferences.edit();
-
                 edit.putString(nomUserActuel, "").apply();
 
                 User user = new User();
                 user.setNom(nomUserActuel);
                 users.add(user);
-
             }
             score = 0;
             Intent intent = new Intent(MainActivity.this, QuizActivity.class);
             startActivity(intent);
 
-            Log.i("utilisateur enregistré ok",users.toString()+users.size());
+//            Log.i("utilisateur enregistré ok",users.toString()+users.size());
         }
     }
 
@@ -127,5 +143,12 @@ public class MainActivity extends AppCompatActivity {
         disableBtns();
     }
 
+    public void afficherToast(String message){
+        if(m_currentToast != null){
+            m_currentToast.cancel();
+        }
+        m_currentToast = Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG);
+        m_currentToast.show();
+    }
 
 }

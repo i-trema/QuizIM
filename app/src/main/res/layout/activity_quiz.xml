@@ -34,17 +34,16 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="24dp" />
-
         <TextView
             android:id="@+id/textViewQuestion"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
             android:autofillHints=""
             android:gravity="center_horizontal"
+            android:maxLines="2"
+            android:minLines="2"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="italic" />
@@ -53,13 +52,11 @@
     <LinearLayout
         android:id="@+id/LinearLayout2"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="64dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
@@ -67,10 +64,11 @@
         <Button
             android:id="@+id/buttonResponse1"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="match_parent"
             android:layout_margin="4dp"
             android:backgroundTint="@color/green_responses"
             android:contentDescription="@string/btn_resp1_description"
+            android:padding="24dp"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="18sp" />
@@ -78,10 +76,11 @@
         <Button
             android:id="@+id/buttonResponse2"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="match_parent"
             android:layout_margin="4dp"
             android:backgroundTint="@color/green_responses"
             android:contentDescription="@string/btn_resp2_description"
+            android:padding="24dp"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="18sp" />
@@ -89,10 +88,11 @@
         <Button
             android:id="@+id/buttonResponse3"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="match_parent"
             android:layout_margin="4dp"
             android:backgroundTint="@color/green_responses"
             android:contentDescription="@string/btn_resp3_description"
+            android:padding="24dp"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="18sp" />
@@ -100,10 +100,11 @@
         <Button
             android:id="@+id/buttonResponse4"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="match_parent"
             android:layout_margin="4dp"
             android:backgroundTint="@color/green_responses"
             android:contentDescription="@string/btn_resp4_description"
+            android:padding="24dp"
             android:textAllCaps="false"
             android:textColor="@color/black"
             android:textSize="18sp" />

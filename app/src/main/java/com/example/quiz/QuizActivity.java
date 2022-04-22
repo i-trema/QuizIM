@@ -50,7 +50,6 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         Log.i("", (questions.toString()));
         String questionNb = "Question 1/4 :";
         textViewQuestionNb.setText(questionNb);
-
         textViewQuestion.setText(question.getQuestion());
 
         buttonResponse1.setText(question.getResponsesList().get(0));
@@ -59,9 +58,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         buttonResponse4.setText(question.getResponsesList().get(3));
 
         score="0";
-        enableBtns();
-
-
+//        enableBtns();
     }
 
     @Override
@@ -69,42 +66,18 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         disableBtns();
         int responseIndex = (int) view.getTag();
         int scoreInt = Integer.parseInt(score);
-        if(questions.getNextQuestionIndex() <3) {
+//        if(questions.getNextQuestionIndex() <3) {
             if (questions.getNextQuestion().getCorrectAnswerIndex() == responseIndex) {
-                Toast.makeText(this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Bonne réponse !", Toast.LENGTH_LONG).show();
                 scoreInt++;
                 score = String.valueOf(scoreInt);
             } else {
-                Toast.makeText(this, "Mauvaise réponse !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Mauvaise réponse !", Toast.LENGTH_LONG).show();
             }
             Log.i("score=", score);
-        }else if(questions.getNextQuestionIndex() >= 3){
-            Log.i("","fin du quiz");
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Quiz terminé");
-            alertDialogBuilder.setMessage("Votre score est de "+score+"/4");
-            alertDialogBuilder.setNeutralButton("OK", (dialogInterface, i) -> {
-
-                questions.setNextQuestionIndex(0);
-                sharedPreferences = getSharedPreferences("users", MODE_PRIVATE);
-
-                Log.i("nomUserActuel", MainActivity.nomUserActuel);
-                SharedPreferences.Editor edit = sharedPreferences.edit();
-
-                edit.putString(MainActivity.nomUserActuel, score)
-                        .apply();
-
-                Intent intent = new Intent(QuizActivity.this, MainActivity.class);
-                startActivity(intent);
-            });
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-
-        }
-
-
 
         new Handler().postDelayed(() -> {
+
             if (questions.getNextQuestionIndex() < 3) {
                 questions.setNextQuestionIndex(questions.getNextQuestionIndex() + 1);
                 Log.i("responseIndex = ", String.valueOf(responseIndex));
@@ -118,9 +91,32 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                 buttonResponse2.setText(questions.getNextQuestion().getResponsesList().get(1));
                 buttonResponse3.setText(questions.getNextQuestion().getResponsesList().get(2));
                 buttonResponse4.setText(questions.getNextQuestion().getResponsesList().get(3));
-                enableBtns();
+
+
+            }else{
+                Log.i("","fin du quiz");
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("Quiz terminé");
+                alertDialogBuilder.setMessage("Votre score est de "+score+"/4");
+                alertDialogBuilder.setNeutralButton("OK", (dialogInterface, i) -> {
+
+                    questions.setNextQuestionIndex(0);
+                    sharedPreferences = getSharedPreferences("users", MODE_PRIVATE);
+
+                    Log.i("nomUserActuel", MainActivity.nomUserActuel);
+                    SharedPreferences.Editor edit = sharedPreferences.edit();
+
+                    edit.putString(MainActivity.nomUserActuel, score)
+                            .apply();
+
+                    Intent intent = new Intent(QuizActivity.this, MainActivity.class);
+                    startActivity(intent);
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
-        }, 2000);
+            enableBtns();
+        }, 3000);
 
 
 
