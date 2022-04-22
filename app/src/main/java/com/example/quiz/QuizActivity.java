@@ -66,7 +66,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         disableBtns();
         int responseIndex = (int) view.getTag();
         int scoreInt = Integer.parseInt(score);
-//        if(questions.getNextQuestionIndex() <3) {
+
             if (questions.getNextQuestion().getCorrectAnswerIndex() == responseIndex) {
                 Toast.makeText(this, "Bonne réponse !", Toast.LENGTH_LONG).show();
                 scoreInt++;
@@ -74,7 +74,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 Toast.makeText(this, "Mauvaise réponse !", Toast.LENGTH_LONG).show();
             }
-            Log.i("score=", score);
+//            Log.i("score=", score);
 
         new Handler().postDelayed(() -> {
 
@@ -91,8 +91,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                 buttonResponse2.setText(questions.getNextQuestion().getResponsesList().get(1));
                 buttonResponse3.setText(questions.getNextQuestion().getResponsesList().get(2));
                 buttonResponse4.setText(questions.getNextQuestion().getResponsesList().get(3));
-
-
+                enableBtns();
             }else{
                 Log.i("","fin du quiz");
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -115,7 +114,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
             }
-            enableBtns();
+
         }, 3000);
 
 

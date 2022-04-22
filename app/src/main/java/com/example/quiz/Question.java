@@ -1,5 +1,7 @@
 package com.example.quiz;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 public class Question {
@@ -8,6 +10,7 @@ public class Question {
     private List<String> responsesList;
     private int correctAnswerIndex;
 
+    @NonNull
     @Override
     public String toString() {
         return "Question{" +
